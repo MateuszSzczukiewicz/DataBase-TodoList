@@ -1,14 +1,12 @@
-const { db, client } = require("./utils/db");
-const { TodoRepository } = require("./repositories/todo.repository");
+const { client } = require("./utils/db");
 const { TodoRecord } = require("./records/todo.record");
 
 (async () => {
   try {
-    const todo = new TodoRecord({
-      _id: "",
-      title: "Skończyć projekt MongoDB",
-    });
-    await TodoRepository.insert(todo);
+    for await (const todo of await TodoRecord.findAllWithCursor()) {
+      const record = new TodoRecord(todo);
+      record.title += " [updated]";
+    }
   } finally {
     await client.close();
   }

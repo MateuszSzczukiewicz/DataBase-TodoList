@@ -1,7 +1,7 @@
 class TodoRecord {
   constructor(obj) {
+    this._id = obj._id;
     this.title = obj.title;
-    this.id = obj.id;
 
     this._validate();
   }
